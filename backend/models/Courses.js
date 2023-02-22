@@ -7,18 +7,14 @@ const courseSchema = new Schema({
         required: true,
         unique: true
     },
-    aa_institute_code: {
-        type: String,
-        required: true,
+    aa_institute: {
+        type: Schema.Types.ObjectId,
+        ref: 'Universities'
     },
     is_active: {
         type: Boolean,
         required: true,
         default: 1
-    },
-    institution_name: {
-        type: String,
-        required: true
     },
     course_level: {
         type: String,
@@ -111,6 +107,58 @@ const courseSchema = new Schema({
     tags: {
         type: String,
         required: false
+    },
+    application_fees: {
+        type: String,
+        required: false
+    },
+    tutation_fees: {
+        type: String,
+        required: false
+    },
+    cost_of_livinng: {
+        type: String,
+        required: false
+    },
+    qualification: {
+        type: String,
+        required: false
+    },
+    deadline: {
+        type: String,
+        required: false
+    },
+    min_stipend: {
+        type: String,
+        required: false
+    },
+    max_stipend: {
+        type: String,
+        required: false
+    },
+    minimum_education: {
+        type: String,
+        required: false
+    },
+    min_gpa: {
+        type: String,
+        required: false
+    },
+    ielts_requirement: {
+        type: String,
+        required: false
+    },
+    toefl_requirement: {
+        type: String,
+        required: false
+    },
+    pte_requirement: {
+        type: String,
+        required: false
+    },
+    destination: {
+       type: String,
+       required: false
     }
 
 });

@@ -7,6 +7,14 @@ const universitiesSchema = new Schema({
         type: String,
         required: true,
     },
+    university_address: {
+        type: String,
+        required: false
+    },
+    univercity_logo: {
+        type: String,
+        required: false
+    },
     university_location: {
         type: String,
         required: true,
@@ -50,5 +58,5 @@ const universitiesSchema = new Schema({
 
 });
 
-const Universities = mongoose.model('universities', universitiesSchema);
+const Universities = mongoose.model('Universities', universitiesSchema);
 module.exports = Universities;
