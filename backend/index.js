@@ -13,6 +13,8 @@ app.use('/storage', express.static('storage'));
 
 // AVAILABLE ROUTES
 
+app.get('/', (req, res) => {res.send('api working')})
+
 app.use('/api/universities', require('./routes/universities'))
 app.use('/api/courses', require('./routes/courses'))
 app.use('/api/users', require('./routes/users'))
