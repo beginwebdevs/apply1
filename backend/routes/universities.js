@@ -9,33 +9,19 @@ router.get('/alluniversities', async (req, res) => {
 })
 
 
-router.get('/filtercourse', async (req, res) => {
+router.get('/filterunivercity', async (req, res) => {
     let data = {}   
-    if(req.query.course_type) {
-        data.course_type = req.query.course_type;
+    if(req.query.university_name) {
+        data.university_name = req.query.university_name;
     }
-    if(req.query.course_name) {
-        data.course_name = req.query.course_name;
+    if(req.query.university_location) {
+        data.university_location = req.query.university_location;
     }
-    if(req.query.field_of_study) {
-        data.field_of_study = req.query.field_of_study;
+    if(req.query.id) {
+        data._id = req.query.id;
     }
-    if(req.query.area_of_study) {
-        data.area_of_study = req.query.area_of_study;
-    }
-    if(req.query.sub_area_of_study) {
-        data.sub_area_of_study = req.query.sub_area_of_study;
-    }
-    if(req.query.course_duration) {
-        data.course_duration = req.query.course_duration;
-    }
-    if(req.query.intakes) {
-        data.intakes = req.query.intakes;
-    }
-    if(req.query.post_study_work_visa) {
-        data.post_study_work_visa = req.query.post_study_work_visa;
-    }
-    let requireddata = await Courses.find(data);
+    
+    let requireddata = await Universities.find(data);
     res.json(requireddata);
 })
 
@@ -44,6 +30,8 @@ router.post('/adduniversity', async (req, res) => {
    
         let univadd = await Universities.create({
             university_name: req.body.university_name,
+            univercity_address: req.body.univercity_address,
+            univercity_logo: req.body.univercity_logo,
             university_location: req.body.university_location,
             about_university: req.body.about_university,
             university_type: req.body.university_type,

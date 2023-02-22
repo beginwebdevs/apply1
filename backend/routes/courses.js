@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router()
 // const { body, validationResult } = require('express-validator');
 const Courses = require('../models/Courses');
+const Universities = require('../models/Universities')
 const Courseslocation = require('../models/Courselocation');
 
 
 router.get('/allcourses', async (req, res) => {
-    let coursedata = await Courses.find();
+    let coursedata = await Courses.find().populate('aa_institute');
     res.json(coursedata);
 })
 
@@ -17,6 +18,9 @@ router.get('/allcourseslocation', async (req, res) => {
 
 router.get('/filtercourse', async (req, res) => {
     let data = {}   
+    if(req.query.id) {
+        data._id = req.query.id;
+    }
     if(req.query.course_type) {
         data.course_type = req.query.course_type;
     }
@@ -41,7 +45,10 @@ router.get('/filtercourse', async (req, res) => {
     if(req.query.post_study_work_visa) {
         data.post_study_work_visa = req.query.post_study_work_visa;
     }
-    let requireddata = await Courses.find(data);
+    if(req.query.destination) {
+        data.destination = req.query.destination;
+    }
+    let requireddata = await Courses.find(data).populate('aa_institute');
     res.json(requireddata);
 })
 
@@ -56,9 +63,9 @@ router.post('/addcourse', async (req, res) => {
     else {
         let courseadd = await Courses.create({
             aa_program_id: req.body.aa_program_id,
-            aa_institute_code: req.body.aa_institute_code,
+            course_summary: req.body.course_summary,
+            aa_institute: req.body.aa_institute,
             is_active: req.body.is_active,
-            institution_name: req.body.institution_name,
             course_level: req.body.course_level,
             field_of_study: req.body.field_of_study,
             area_of_study: req.body.area_of_study,
@@ -81,6 +88,19 @@ router.post('/addcourse', async (req, res) => {
             course_ranking: req.body.course_ranking,
             url: req.body.url,
             tags: req.body.tags,
+            application_fees: req.body.application_fees,
+            tutation_fees: req.body.tutation_fees,
+            cost_of_livinng: req.body.cost_of_livinng,
+            qualification: req.body. qualification,
+            deadline: req.body.deadline,
+            min_stipend: req.body.min_stipend,
+            max_stipend: req.body.max_stipend,
+            minimum_education: req.body.minimum_education,
+            min_gpa: req.body.min_gpa,
+            ielts_requirement: req.body.ielts_requirement,
+            toefl_requirement: req.body.toefl_requirement,
+            pte_requirement: req.body.pte_requirement,
+            destination: req.body.destination
         });
         success = true;
         message = "Course added";
