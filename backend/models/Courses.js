@@ -4,8 +4,7 @@ const { Schema } = mongoose;
 const courseSchema = new Schema({
     aa_program_id: {
         type: String,
-        required: true,
-        unique: true
+        required: false,
     },
     aa_institute: {
         type: Schema.Types.ObjectId,
