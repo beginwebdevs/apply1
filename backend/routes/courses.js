@@ -7,8 +7,14 @@ const Courseslocation = require('../models/Courselocation');
 
 
 router.get('/allcourses', async (req, res) => {
-    let coursedata = await Courses.find().populate('aa_institute');
-    res.json(coursedata);
+
+    let page = req.query.page;
+
+    let coursedata = await Courses.find().skip(page * 6).limit(6).populate('aa_institute');
+    let totalRecords = await Courses.find().count()
+    let totalPage = Math.ceil(totalRecords / 6);
+    res.json({coursedata, totalPage, totalRecords});
+    console.log(totalRecords);
 })
 
 router.get('/allcourseslocation', async (req, res) => {
