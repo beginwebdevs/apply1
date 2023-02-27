@@ -3,6 +3,7 @@ const express = require('express')
 var cors = require('cors')
 connectToMongo();
 
+
 const app = express()
 require('dotenv').config()
 const port = process.env.PORT || 5000;
@@ -13,12 +14,12 @@ app.use('/storage', express.static('storage'));
 
 // AVAILABLE ROUTES
 
-app.get('/', (req, res) => {res.send('api working')})
-
 app.use('/api/universities', require('./routes/universities'))
 app.use('/api/courses', require('./routes/courses'))
 app.use('/api/users', require('./routes/users'))
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/fields', require('./routes/fieldofstudy'));
+
 
 
 if(process.env.NODE_ENV == "production") {
