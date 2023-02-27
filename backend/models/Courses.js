@@ -6,6 +6,10 @@ const courseSchema = new Schema({
         type: String,
         required: false,
     },
+    crico_code: {
+        type: String,
+        required: false
+    },
     aa_institute: {
         type: Schema.Types.ObjectId,
         ref: 'Universities'
@@ -34,6 +38,10 @@ const courseSchema = new Schema({
     course_type: {
         type: String,
         required: true
+    },
+    addmission_requirement: {
+        type: String,
+        required: false
     },
     course_name: {
         type: String,
@@ -88,7 +96,7 @@ const courseSchema = new Schema({
         required: false
     },
     scholarships: {
-        type: String,
+        type: Boolean,
         required: false
     },
     course_ranking: {
@@ -115,7 +123,19 @@ const courseSchema = new Schema({
         type: String,
         required: false
     },
-    cost_of_livinng: {
+    estimated_total_cost: {
+        type: String,
+        required: false
+    },
+    language: {
+        type: String,
+        required: false
+    },
+    cricos_provider_code: {
+        type: String,
+        required: false
+    },
+    cricos_code: {
         type: String,
         required: false
     },
@@ -158,6 +178,10 @@ const courseSchema = new Schema({
     destination: {
        type: String,
        required: false
+    },
+    non_tut_fees: {
+        type: String,
+        required: false,
     }
 
 });
