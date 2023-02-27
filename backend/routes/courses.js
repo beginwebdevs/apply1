@@ -14,7 +14,7 @@ router.get('/allcourses', async (req, res) => {
     let totalRecords = await Courses.find().count()
     let totalPage = Math.ceil(totalRecords / 6);
     res.json({coursedata, totalPage, totalRecords});
-    console.log(totalRecords);
+   
 })
 
 router.get('/allcourseslocation', async (req, res) => {
@@ -23,9 +23,14 @@ router.get('/allcourseslocation', async (req, res) => {
 })
 
 router.get('/filtercourse', async (req, res) => {
+
+    let page = req.query.page;
     let data = {}   
     if(req.query.id) {
         data._id = req.query.id;
+    }
+    if(req.query.aa_institute){
+        data.aa_institute = req.query.aa_institute
     }
     if(req.query.course_type) {
         data.course_type = req.query.course_type;
@@ -54,8 +59,10 @@ router.get('/filtercourse', async (req, res) => {
     if(req.query.destination) {
         data.destination = req.query.destination;
     }
-    let requireddata = await Courses.find(data).populate('aa_institute');
-    res.json(requireddata);
+    let requireddata = await Courses.find(data).limit(6).skip(page * 6).populate('aa_institute');
+    let totalFRecords = await Courses.find(data).count()
+    let totalFPage = Math.ceil(totalFRecords / 6);
+    res.json({requireddata, totalFRecords, totalFPage});
 })
 
 

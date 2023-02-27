@@ -11,6 +11,7 @@ router.get('/alluniversities', async (req, res) => {
 
 router.get('/filterunivercity', async (req, res) => {
     let data = {}   
+    let page = req.query.page;
     if(req.query.university_name) {
         data.university_name = req.query.university_name;
     }
@@ -21,8 +22,10 @@ router.get('/filterunivercity', async (req, res) => {
         data._id = req.query.id;
     }
     
-    let requireddata = await Universities.find(data);
-    res.json(requireddata);
+    let requireddata = await Universities.find(data).limit(6).skip(page * 6);
+    let totalFRecords = await Universities.find(data).count()
+    let totalFPage = Math.ceil(totalFRecords / 6);
+    res.json({requireddata, totalFRecords, totalFPage});
 })
 
 
