@@ -36,7 +36,8 @@ router.get('/filtercourse', async (req, res) => {
         data.course_type = req.query.course_type;
     }
     if(req.query.course_name) {
-        data.course_name = req.query.course_name;
+        const titllereg = new RegExp(req.query.course_name, 'i');
+        data.course_name = {$regex: titllereg};
     }
     if(req.query.field_of_study) {
         data.field_of_study = req.query.field_of_study;
@@ -48,7 +49,7 @@ router.get('/filtercourse', async (req, res) => {
         data.sub_area_of_study = req.query.sub_area_of_study;
     }
     if(req.query.course_duration) {
-        data.course_duration = req.query.course_duration;
+        data.course_duration = {$lte: req.query.course_duration};
     }
     if(req.query.intakes) {
         data.intakes = req.query.intakes;
