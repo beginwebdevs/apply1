@@ -22,9 +22,9 @@ app.use('/api/fields', require('./routes/fieldofstudy'));
 
 
 
-if(process.env.NODE_ENV == "production") {
-  app.use(express.static("frontend/build"));
-}
+// if(process.env.NODE_ENV == "production") {
+//   app.use(express.static("frontend/build"));
+// }
 
 
 app.listen(port, () => {
