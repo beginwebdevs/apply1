@@ -35,6 +35,9 @@ router.get('/filtercourse', async (req, res) => {
     if(req.query.course_type) {
         data.course_type = req.query.course_type;
     }
+    if(req.query.course_level) {
+        data.course_level = req.query.course_level;
+    }
     if(req.query.course_name) {
         const titllereg = new RegExp(req.query.course_name, 'i');
         data.course_name = {$regex: titllereg};
@@ -50,6 +53,9 @@ router.get('/filtercourse', async (req, res) => {
     }
     if(req.query.course_duration) {
         data.course_duration = {$lte: req.query.course_duration};
+    }
+    if(req.query.estimated_total_cost) {
+        data.estimated_total_cost = {$lte: req.query.estimated_total_cost};
     }
     if(req.query.intakes) {
         data.intakes = req.query.intakes;
@@ -142,6 +148,14 @@ router.post('/addcourselocation', async (req, res) => {
         message = "Course Location added";
         res.json({ success, message, courselocationadd });
     }
+})
+
+
+router.get('/estimatedcost', async (req, res) => {
+    let maxCost = await Courses.find().sort({estimated_total_cost:-1}).limit(1);
+    let minCost = await Courses.find().sort({estimated_total_cost:+1}).limit(1);
+
+    res.json({maxCost, minCost})
 })
 
 

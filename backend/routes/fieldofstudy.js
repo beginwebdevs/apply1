@@ -4,6 +4,7 @@ const router = express.Router();
 const FieldOfStudies = require('../models/FieldOfStudy');
 const AreaOfStudies = require('../models/AreaOfStudy');
 const CourseTypes = require('../models/CourseType');
+const CourseLevels = require('../models/CourseLabel');
 
 
 router.post('/createfiedldofstudy', (req, res) => {
@@ -52,6 +53,20 @@ router.post('/createcoursetype', async (req, res) => {
 router.get('/coursetype', async (req, res) => {
     let field = await CourseTypes.find();
     res.json(field)
+})
+
+router.post('/courselevels', async (req, res) => {
+
+    let field = await CourseLevels.create({
+        title: req.body.title
+    })
+
+    res.json({success: true, field});
+})
+
+router.get('/courselevels', async (req, res) => {
+    const fields = await CourseLevels.find();
+    res.json(fields);
 })
 
 
