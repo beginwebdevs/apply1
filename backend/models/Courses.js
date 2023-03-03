@@ -124,7 +124,7 @@ const courseSchema = new Schema({
         required: false
     },
     estimated_total_cost: {
-        type: String,
+        type: Number,
         required: false
     },
     language: {
@@ -182,6 +182,10 @@ const courseSchema = new Schema({
     non_tut_fees: {
         type: String,
         required: false,
+    },
+    course_mode: {
+        type: String,
+        required: false
     }
 
 });
