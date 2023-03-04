@@ -4,12 +4,14 @@ var cors = require('cors')
 connectToMongo();
 
 
+
 const app = express()
 require('dotenv').config()
 const port = process.env.PORT || 5000;
 
 app.use(express.json())
 app.use(cors())
+app.use('/', express.static('appp'));
 app.use('/storage', express.static('storage'));
 
 // AVAILABLE ROUTES
@@ -19,6 +21,8 @@ app.use('/api/courses', require('./routes/courses'))
 app.use('/api/users', require('./routes/users'))
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/fields', require('./routes/fieldofstudy'));
+
+
 
 
 
