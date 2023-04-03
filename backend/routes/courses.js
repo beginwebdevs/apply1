@@ -4,6 +4,9 @@ const router = express.Router()
 const Courses = require('../models/Courses');
 const Universities = require('../models/Universities')
 const Courseslocation = require('../models/Courselocation');
+const authMiddleware = require('../middlewares/auth-middleware');
+const semiauthMidlleware = require('../middlewares/semiauth-midlleware');
+
 
 
 router.get('/allcourses', async (req, res) => {
@@ -156,6 +159,13 @@ router.get('/estimatedcost', async (req, res) => {
     let minCost = await Courses.find().sort({estimated_total_cost:+1}).limit(1);
 
     res.json({maxCost, minCost})
+})
+
+router.post('/compare', async (req, res) => {
+
+    const courses = await Courses.find({_id: {$in: req.body.data}}).populate('aa_institute')
+    console.log(req.body.data);
+    res.json(courses)
 })
 
 
