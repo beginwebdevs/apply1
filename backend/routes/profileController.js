@@ -26,10 +26,10 @@ router.post('/savepersonaldetail', authMiddleware,  async (req, res) => {
         user_id: user._id
     }}, {returnDocument: 'after', upsert: true})
 
-    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 20, personal_detail: personalDetail._id}}, {upsert: false})
+    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 20, personal_detail: personalDetail._id}}, {returnDocument: 'after',upsert: false})
 
 
-    res.json(personalDetail);
+    res.json({personalDetail, updUser});
 
 })
 
@@ -86,9 +86,9 @@ router.post('/saveeducationdetail', authMiddleware, async (req, res) => {
         user_id: user._id
     }, {returnDocument: 'after', upsert: true})
 
-    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 60}}, {upsert: false})
+    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 60}}, {returnDocument: 'after' ,upsert: false})
    
-    res.json({educationDetail})
+    res.json({educationDetail, updUser})
 })
 
 router.get('/geteducationdetail', authMiddleware, async (req, res) => {
@@ -109,9 +109,9 @@ router.post('/saveenglishtest', authMiddleware, async (req, res) => {
         user_id: user._id
     }, {returnDocument: 'after', upsert: true})
 
-    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 80}}, {upsert: false})
+    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 80}}, {returnDocument: 'after' ,upsert: false})
 
-    res.json({englishTest})
+    res.json({englishTest, updUser})
 })
 
 router.get('/getenglishtest', authMiddleware, async (req, res) => {
@@ -154,9 +154,9 @@ router.post('/savestudypreference', authMiddleware, async (req, res) => {
         user: user._id
     }, {returnDocument: 'after', upsert: true})
 
-    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 40}}, {upsert: false})
+    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 40}}, {returnDocument: 'after' ,upsert: false})
 
-    res.json({studyPreference})
+    res.json({studyPreference, updUser})
 
     
 })
@@ -192,9 +192,9 @@ router.post('/savestandertest', authMiddleware, async (req, res) => {
         user_id: user._id
     }, {returnDocument: 'after', upsert: true})
 
-    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 100}}, {upsert: false})
+    let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 100}}, {returnDocument: 'after' ,upsert: false})
 
-    res.json({standerTest})
+    res.json({standerTest, updUser})
 })
 
 router.get('/getstandertest', authMiddleware, async (req, res) => {
