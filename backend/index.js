@@ -3,6 +3,7 @@ const express = require('express')
 var cors = require('cors')
 var bodyParser = require("body-parser")
 const cookieParser = require('cookie-parser');
+const path = require('path')
 
 connectToMongo();
 
@@ -29,11 +30,14 @@ app.use('/api/courses', require('./routes/courses'))
 app.use('/api/profile', require('./routes/profileController'));
 app.use('/api/users', require('./routes/users'))
 app.use('/api/fields', require('./routes/fieldofstudy'));
-app.use('/api/email', require('./routes/verifyMail'))
+app.use('/api/email', require('./routes/verifyMail'));
+app.use('/api/application', require('./routes/applications'))
 
 
 
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'appp', 'index.html'))
+});
 
 // if(process.env.NODE_ENV == "production") {
 //   app.use(express.static("frontend/build"));

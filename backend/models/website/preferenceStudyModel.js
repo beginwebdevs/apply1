@@ -8,16 +8,21 @@ const preferenceStydySchema = new Schema({
         required: true
     },
     education_country: [{
-        type: String
+        type: String,
+        default: null
+
     }],
     field_of_study: {
         type: String,
+        default: null
     },
     level_of_study: {
         type: String,
+        default: null
     },
     start_year: {
         type: String,
+        default: null
     }
 })
 

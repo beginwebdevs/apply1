@@ -8,29 +8,52 @@ const personalDetailSchema = new Schema({
         required: true
     },
     first_name: {
-        type: String
+        type: String,
+        default: null
     },
     last_name: {
-        type: String
+        type: String,
+        default: null
     },
     dob: {
         type: Date,
-        default: ''
+        default: null
     },
     country_of_birth: {
-        type: String
+        type: String,
+        default: null
     },
     gender: {
-        type: String
+        type: String,
+        default: null
     },
     nationality: {
-        type: String
+        type: String,
+        default: null
     },
     dual_citizenship: {
-        type: String
+        type: String,
+        default: null
     },
     marital_status: {
-        type: String
+        type: String,
+        default: null
+    },
+    address: {
+        type: String,
+        default: null
+    },
+    state: {
+        type: String,
+        default: null
+    },
+    city: {
+        type: String,
+        default: null
+    },
+    postal_code: {
+        type: String,
+        default: null
     }
 })
 

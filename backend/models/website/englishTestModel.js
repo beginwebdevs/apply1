@@ -8,28 +8,40 @@ const englishTestSchema = new Schema({
         required: true
     },
     exam_status: {
-        type: String
+        type: String,
+        default : null
     },
     test_name: {
-        type: String
+        type: String,
+        default: null
     },
     test_date: {
-        type: Date
+        type: Date,
+        default: null
     },
     speaking: {
-        type: String
+        type: String,
+        default: null
     },
     listening: {
-        type: String
+        type: String,
+        default: null
     },
     writing: {
-        type: String
+        type: String,
+        default: null
     },
     reading: {
-        type: String
+        type: String,
+        default: null
     },
     over_all: {
-        type: String
+        type: String,
+        default: null
+    },
+    need_help: {
+        type: Boolean,
+        default: false
     }
 })
 

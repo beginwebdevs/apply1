@@ -13,11 +13,11 @@ const employementDetailSchema = new Schema({
         required: true
     },
     satart_date: {
-        type: Date,
+        type: String,
         required: true
     },
     end_date: {
-        type: Date,
+        type: String,
         required: true
     },
     company: {

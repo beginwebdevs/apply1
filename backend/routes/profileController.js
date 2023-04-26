@@ -10,6 +10,7 @@ const AddmissionTests = require('../models/website/addmissionTestModel');
 const PreferenceStudy = require('../models/website/preferenceStudyModel');
 const Users = require('../models/website/users.Model')
 const StanderdTests = require('../models/website/standerdTestModel');
+const Application = require('../models/website/applicationsModel');
 const fs = require('fs');
 const path = require('path')
 
@@ -28,6 +29,10 @@ router.post('/savepersonaldetail', authMiddleware,  async (req, res) => {
 
     let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 20, personal_detail: personalDetail._id}}, {returnDocument: 'after',upsert: false})
 
+    if(req.body.application_id){
+        let updApp = await Application.findOneAndUpdate({_id: req.body.application_id}, { personal_info: personalDetail._id })
+    }
+
 
     res.json({personalDetail, updUser});
 
@@ -42,19 +47,18 @@ router.post('/saveemployementsdetail', authMiddleware, async (req, res) => {
     
     const { user } = req;
 
-    const empData = await EmployementsDetailes.findOne({user_id: user._id});
+    const empData = await EmployementsDetailes.findOneAndUpdate({user_id: user._id}, {$set: {
+        ...req.body,
+        user_id: user._id
+    }}, {upsert : true, returnDocument: 'after'});
 
-    let employementdetail;
-
-    if(!empData){
-
-        employementdetail = await EmployementsDetailes.create({
-            ...req.body,
-            user_id: user._id
-        })
+    if(req.body.application_id){
+        let updApp = await Application.findOneAndUpdate({_id: req.body.application_id}, { employement: empData._id })
     }
 
-    res.json({employementdetail})
+  
+
+    res.json({empData})
 })
 
 router.get('/getemployementsdetail', authMiddleware, async (req, res) => {
@@ -87,6 +91,9 @@ router.post('/saveeducationdetail', authMiddleware, async (req, res) => {
     }, {returnDocument: 'after', upsert: true})
 
     let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 60}}, {returnDocument: 'after' ,upsert: false})
+    if(req.body.application_id){
+        let updApp = await Application.findOneAndUpdate({_id: req.body.application_id}, { edu_info: educationDetail._id })
+    }
    
     res.json({educationDetail, updUser})
 })
@@ -104,12 +111,15 @@ router.post('/saveenglishtest', authMiddleware, async (req, res) => {
 
     const { user } = req;
 
-    let englishTest = await EnglishDetailes.findOneAndUpdate({user_id: user._id, test_name: req.body.test_name}, {
+    let englishTest = await EnglishDetailes.findOneAndUpdate({user_id: user._id}, {
         ...req.body,
         user_id: user._id
     }, {returnDocument: 'after', upsert: true})
 
     let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 80}}, {returnDocument: 'after' ,upsert: false})
+    if(req.body.application_id){
+        let updApp = await Application.findOneAndUpdate({_id: req.body.application_id}, { english_test: englishTest._id })
+    }
 
     res.json({englishTest, updUser})
 })
@@ -155,6 +165,9 @@ router.post('/savestudypreference', authMiddleware, async (req, res) => {
     }, {returnDocument: 'after', upsert: true})
 
     let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 40}}, {returnDocument: 'after' ,upsert: false})
+    if(req.body.application_id){
+        let updApp = await Application.findOneAndUpdate({_id: req.body.application_id}, { study_preference: studyPreference._id })
+    }
 
     res.json({studyPreference, updUser})
 
@@ -193,6 +206,9 @@ router.post('/savestandertest', authMiddleware, async (req, res) => {
     }, {returnDocument: 'after', upsert: true})
 
     let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 100}}, {returnDocument: 'after' ,upsert: false})
+    if(req.body.application_id){
+        let updApp = await Application.findOneAndUpdate({_id: req.body.application_id}, { standerd_test: standerTest._id })
+    }
 
     res.json({standerTest, updUser})
 })
