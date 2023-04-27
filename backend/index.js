@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json({limit: '8mb'}))
 app.use(cookieParser())
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+app.use(cors({ credentials: true, origin: 'http://aadmin.beginweb.in' }))
 //app.use(semiauthMiddleware)
 app.use('/', express.static('appp'));
 app.use('/storage', express.static('storage'));
@@ -32,6 +32,7 @@ app.use('/api/users', require('./routes/users'))
 app.use('/api/fields', require('./routes/fieldofstudy'));
 app.use('/api/email', require('./routes/verifyMail'));
 app.use('/api/application', require('./routes/applications'))
+app.use('/api/admin', require('./routes/admin'))
 
 
 
