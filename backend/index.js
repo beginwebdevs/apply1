@@ -17,7 +17,9 @@ app.use(express.json({limit: '8mb'}))
 app.use(cookieParser())
 app.use(cors({ credentials: true, origin: 'http://aadmin.beginweb.in' }))
 //app.use(semiauthMiddleware)
+
 app.use('/', express.static('appp'));
+app.use('/admin', express.static('admin'));
 app.use('/storage', express.static('storage'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,7 +37,9 @@ app.use('/api/application', require('./routes/applications'))
 app.use('/api/admin', require('./routes/admin'))
 
 
-
+app.get('/admin/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin', 'index.html'))
+});
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'appp', 'index.html'))
 });
