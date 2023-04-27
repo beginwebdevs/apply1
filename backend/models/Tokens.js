@@ -11,6 +11,9 @@ const tokenSchema = ({
 
         type: Schema.Types.ObjectId,
         ref: 'Users'
+    },
+    user_email:{
+        type: String
     }
 })
 
