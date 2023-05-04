@@ -6,10 +6,10 @@ exports.saved_course = async (req, res) => {
 
     //console.log(req.user);
 
-    const savedCourse = await savedModel.findOne({course: req.body.course_id});
+    const savedCourse = await savedModel.findOne({course: req.body.course_id, user_id: req.user._id});
 
     if(savedCourse){
-        const d = await savedModel.findOneAndDelete({course: req.body.course_id})
+        const d = await savedModel.deleteOne({course: req.body.course_id, user_id: req.user._id})
         res.json({
             status: true,
             message: "Course removed Successfully ....!"
