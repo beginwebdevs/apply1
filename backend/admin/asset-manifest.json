@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/admin/static/css/main.af1be514.css",
-    "main.js": "/admin/static/js/main.4e0bba69.js",
+    "main.css": "/admin/static/css/main.908dd7b9.css",
+    "main.js": "/admin/static/js/main.4d74e09d.js",
     "static/media/3.jpg": "/admin/static/media/3.366c572535c91fde0055.jpg",
     "static/media/SweetSansProBoldItalic.woff": "/admin/static/media/SweetSansProBoldItalic.5fda163c0bd38ee1c614.woff",
     "static/media/SweetSansProRegular.woff": "/admin/static/media/SweetSansProRegular.e00d983beac64f41e7c1.woff",
@@ -9,11 +9,11 @@
     "static/media/SweetSansProBold.woff": "/admin/static/media/SweetSansProBold.abf61be6dee132b309c3.woff",
     "static/media/SweetSansProMedium.woff": "/admin/static/media/SweetSansProMedium.80e817585943ef41fa17.woff",
     "index.html": "/admin/index.html",
-    "main.af1be514.css.map": "/admin/static/css/main.af1be514.css.map",
-    "main.4e0bba69.js.map": "/admin/static/js/main.4e0bba69.js.map"
+    "main.908dd7b9.css.map": "/admin/static/css/main.908dd7b9.css.map",
+    "main.4d74e09d.js.map": "/admin/static/js/main.4d74e09d.js.map"
   },
   "entrypoints": [
-    "static/css/main.af1be514.css",
-    "static/js/main.4e0bba69.js"
+    "static/css/main.908dd7b9.css",
+    "static/js/main.4d74e09d.js"
   ]
 }
