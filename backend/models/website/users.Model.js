@@ -37,7 +37,19 @@ const usersSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'EnglishDetailes'
         }
-    ]
+    ],
+    stage: {
+        type: String,
+        default: 'User Created'
+    },
+    priority: {
+        type: String,
+        default: 'Hot'
+    },
+    notes: {
+        type: String,
+        default: ''
+    }
 });
 
 const Users = mongoose.model('Users', usersSchema);

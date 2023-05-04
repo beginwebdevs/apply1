@@ -16,6 +16,8 @@ const EnglishDetailes = require('../models/website/englishTestModel');
 const AddmissionTests = require('../models/website/addmissionTestModel');
 const PreferenceStudy = require('../models/website/preferenceStudyModel');
 const StanderdTests = require('../models/website/standerdTestModel');
+const Applications = require('../models/website/applicationsModel');
+const savedModel = require("../models/website/savedModel");
 
 const accessTokenSecrete = 'b24cd70fa9134d5019250ccc9e43e223aea3974dab998c870cf42f4ddf3b14745cbaf3fe9c8a5a7eedf74c5dc48b84d641d07a90f09bb4a568c7f6e47a5f437b';
 const refreshTokenSecrete = 'df67b54b8e77a814b5b3dea73f78a7a5bb216f744d5dc9e98b769e4718c5da641beff1c29863398afef1f740a1eb573916107a9a80bbc986703fc8375aa12582';
@@ -196,6 +198,62 @@ router.post('/adduser', async (req, res) => {
 
 
     res.json({userdata, personaldata, englistdata, educationdata, preferencedata, standerdata})
+})
+
+router.post('/updatepriority', async (req, res) => {
+    const upd = await Users.findOneAndUpdate({_id: req.body.user_id}, {$set: {priority: req.body.Priority}}, {returnDocument: 'after'})
+    res.json(upd)
+})
+
+router.post('/updateuser', async (req, res) => {
+    const upd = await Users.findOneAndUpdate({_id: req.query.user_id}, {$set : {...req.body}})
+    res.json(upd)
+})
+
+router.get('/apicationbyuser', async (req, res) => {
+
+    const applications = await Applications.find({user: req.query.user_id}).populate({path: 'course', populate: {path: 'aa_institute'}}).populate('personal_info').populate('edu_info').populate('english_test').populate('study_preference').populate('standerd_test').populate('employement')
+    if(applications){
+        res.json(applications)
+    }else{
+        res.json([])
+    }
+})
+
+router.get('/userdetails', async (req, res) => {
+    const education = await EducationDetailes.find({user_id: req.query._id},{_id:0});
+    const english = await EnglishDetailes.find({user_id: req.query._id},{_id:0})
+    const employement = await EmployementsDetailes.find({user_id: req.query._id},{_id:0});
+    const standered = await StanderdTests.find({user_id: req.query._id},{_id:0});
+    const preference = await PreferenceStudy.find({user_id: req.query._id},{_id:0});
+    const saved = await savedModel.find({user_id: req.query._id},{_id:0});
+    const application = await Applications.find({user: req.query._id},{_id:0})
+    
+    res.json({education, english, employement, standered, preference, saved, application})
+})
+
+router.post('/updateuserall', async (req, res) => {
+    const updPersonal = await PersonalDetailes.findOneAndUpdate({user_id: req.body.user_id}, req.body.personalInfo);
+    const updEnglish = await EnglishDetailes.findOneAndUpdate({user_id: req.body.user_id}, req.body.educationInfo[0]);
+    const updEducation = await EducationDetailes.findOneAndUpdate({user_id: req.body.user_id}, req.body.educationInfo[0]);
+    const updPref = await PreferenceStudy.findOneAndUpdate({user_id: req.body.user_id}, req.body.preferenceInfo);
+    const updStander = await StanderdTests.findOneAndUpdate({user_id: req.body.user_id}, req.body.stenderedInfo)
+    //console.log(req.body)
+    res.json({success: true})
+})
+
+router.get('/deleteuser', async (req, res) => {
+    const use = await Users.deleteOne({_id: req.query.user_id});
+    const per = await PersonalDetailes.deleteMany({user_id: req.query.user_id});
+    const edu = await EducationDetailes.deleteMany({user_id: req.query.user_id});
+    const eng = await EnglishDetailes.deleteMany({user_id: req.body.user_id});
+    const sta = await StanderdTests.deleteMany({user_id: req.query.user_id});
+    const emp = await EmployementsDetailes.deleteMany({user_id: req.query.user_id});
+    const sav = await savedModel.deleteMany({user_id: req.query.user_id});
+    const appl = await Applications.deleteMany({user: req.query.user_id})
+
+    let usersdata = await Users.find().populate('personal_detail');
+    res.json(usersdata);
 })
 
 module.exports = router

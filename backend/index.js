@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json({limit: '8mb'}))
 app.use(cookieParser())
-app.use(cors({ credentials: true, origin: 'http://aadmin.beginweb.in' }))
+app.use(cors({ credentials: true, origin: ['http://localhost:3000', 'http://localhost:3001'] }))
 //app.use(semiauthMiddleware)
 
 app.use('/', express.static('appp'));

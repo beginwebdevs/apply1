@@ -16,7 +16,7 @@ exports.sendOtp = async (req, res) => {
         res.status(400).json({success: false, message: "Mobile are required"})
     }
 
-    axios.get(`https://2factor.in/API/V1/3d822504-c4ad-11ed-81b6-0200cd936042/SMS/+91${mobile}/AUTOGEN`)
+    axios.get(`https://2factor.in/API/V1/426b85b5-e8b6-11ed-addf-0200cd936042/SMS/+91${mobile}/AUTOGEN`)
         .then((success) => {
             if (success.status == 200) {
                 return res.json({
@@ -42,8 +42,9 @@ exports.verifyOtp = async (req, res) => {
         return res.status(400).json({status: false, message: "OTP Required"});
     }
 
-    const isValidOtp = await axios.get(`https://2factor.in/API/V1/3d822504-c4ad-11ed-81b6-0200cd936042/SMS/VERIFY3/+91${mobile}/${otp}`)
+    const isValidOtp = await axios.get(`https://2factor.in/API/V1/426b85b5-e8b6-11ed-addf-0200cd936042/SMS/VERIFY3/+91${mobile}/${otp}`)
 
+    
 
     if (isValidOtp.data.Status == 'Success') {
 

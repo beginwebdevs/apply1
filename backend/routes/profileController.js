@@ -12,7 +12,9 @@ const Users = require('../models/website/users.Model')
 const StanderdTests = require('../models/website/standerdTestModel');
 const Application = require('../models/website/applicationsModel');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+
+
 
 router.post('/savepersonaldetail', authMiddleware,  async (req, res) => {
     
@@ -47,13 +49,53 @@ router.post('/saveemployementsdetail', authMiddleware, async (req, res) => {
     
     const { user } = req;
 
-    const empData = await EmployementsDetailes.findOneAndUpdate({user_id: user._id}, {$set: {
-        ...req.body,
-        user_id: user._id
-    }}, {upsert : true, returnDocument: 'after'});
+    let empData;
+
+    
+
+
+    if(req.body._id){
+
+        let dtc = {};
+        if(req.body.occupation){
+            dtc.occupation = req.body.occupation
+        }
+        if(req.body.satart_date){
+            dtc.satart_date = req.body.satart_date
+        }
+        if(req.body.end_date){
+            dtc.end_date = req.body.end_date
+        }
+        if(req.body.company){
+            dtc.company = req.body.company
+        }
+        if(req.body.type_of_employment){
+            dtc.type_of_employment = req.body.type_of_employment
+        }
+        if(req.body.field_of_experience){
+            dtc.field_of_experience = req.body.field_of_experience
+        }
+
+        empData = await EmployementsDetailes.findOneAndUpdate({user_id: user._id, _id: req.body._id}, {$set: {
+            ...dtc,
+            user_id: user._id
+        }}, {returnDocument: 'after'});
+    }else{
+
+        empData = await EmployementsDetailes.create({
+            ...req.body,
+            user_id: user._id
+        })
+
+    }
+
+
 
     if(req.body.application_id){
-        let updApp = await Application.findOneAndUpdate({_id: req.body.application_id}, { employement: empData._id })
+        let appli = await Application.findOne({_id: req.body.application_id})
+        if(!appli.employement.includes(empData._id)){
+         let updApp = await Application.findOneAndUpdate({_id: req.body.application_id}, { $push: {employement : empData._id} })
+        }
     }
 
   
@@ -62,7 +104,7 @@ router.post('/saveemployementsdetail', authMiddleware, async (req, res) => {
 })
 
 router.get('/getemployementsdetail', authMiddleware, async (req, res) => {
-    const employData = await EmployementsDetailes.findOne({user_id: req.user._id});
+    const employData = await EmployementsDetailes.find({user_id: req.user._id});
     res.json({employData});
 })
 
@@ -204,6 +246,11 @@ router.post('/savestandertest', authMiddleware, async (req, res) => {
         ...educationData,
         user_id: user._id
     }, {returnDocument: 'after', upsert: true})
+
+    const upuser = await Users.findOne({_id: user._id});
+    if(upuser.stage != 'Applicant' && upuser.stage !== 'Course Shortlisted'){
+        const us = await Users.findOneAndUpdate({_id: user._id}, {$set: {stage: 'Wizaed Completed'}})
+    }
 
     let updUser = await Users.findOneAndUpdate({_id: user._id}, {$set: {profile_status: 100}}, {returnDocument: 'after' ,upsert: false})
     if(req.body.application_id){

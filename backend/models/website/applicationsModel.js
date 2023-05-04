@@ -34,11 +34,13 @@ const applicationSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'StanderdTests'
     },
-    employement: {
+    employement: [{
         type: Schema.Types.ObjectId,
         ref: 'EmployementsDetailes'
-    }
+    }]
     
+}, {
+    timestamps: true
 })
 
 const Application = mongoose.model('Applications', applicationSchema);

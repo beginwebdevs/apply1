@@ -8,6 +8,7 @@ const EducationDetailes = require('../models/website/educationDetailModel');
 const EnglishDetailes = require('../models/website/englishTestModel');
 const StanderdTests = require('../models/website/standerdTestModel');
 const EmployementsDetailes = require('../models/website/employementDetailModel');
+const Users = require('../models/website/users.Model')
 
 
 router.post('/create', authMiddleware, async (req, res) => {
@@ -85,6 +86,10 @@ router.post('/create', authMiddleware, async (req, res) => {
         ...applicationData,
         status: 'Pending'
     })
+
+    const upduser = await Users.findOneAndUpdate({_id: user._id}, {$set: {stage: 'Applicant'}})
+
+
 
     res.json({sucess: true, application, message: 'application created got application page for next step'})
 

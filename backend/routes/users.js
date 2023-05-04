@@ -9,10 +9,31 @@ const PersonalDetailes = require('../models/website/personalDetailModel');
 
 
 
+
 router.get('/allusers', async (req, res) => {
     let usersdata = await Users.find().populate('personal_detail');
     res.json(usersdata);
 })
+
+router.get('/bytag', async (req, res) => {
+    let filter = {}
+    if(req.query.priority){
+        filter.priority = req.query.priority
+    }
+    if(req.query._id){
+        filter._id = req.query._id
+    }
+
+
+    const users = await Users.find(filter).populate('personal_detail');
+    if(users){
+        return res.json(users)
+    }else{
+        res.json([])
+    }
+})
+
+
 
 
 

@@ -1,4 +1,5 @@
 const savedModel = require("../models/website/savedModel")
+const Users = require('../models/website/users.Model');
 const mongoose = require('mongoose');
 
 exports.saved_course = async (req, res) => {
@@ -9,11 +10,20 @@ exports.saved_course = async (req, res) => {
 
     if(savedCourse){
         const d = await savedModel.findOneAndDelete({course: req.body.course_id})
-        return res.json({
+        res.json({
             status: true,
-            message: "Course remover Successfully ....!"
+            message: "Course removed Successfully ....!"
         })
-    }
+
+        return
+    }else{
+
+    console.log('something')
+
+   const user = await Users.findOne({_id: req.user._id});
+   if(user.stage != 'Applicant'){
+    const upu = await Users.findOneAndUpdate({_id: req.user._id}, {$set: {stage: 'Course Shortlisted'}})
+   }
 
 
     new savedModel({
@@ -35,17 +45,24 @@ exports.saved_course = async (req, res) => {
             })
         })
 
+    }
+
 
 
 }
+
+
 
 
 exports.list_saved_course = async (req, res) => {
 
 
     const {page} = req.query;
+    const skipNum = +page > 0 ?  (page - 1) * 6 : 0;
 
-    const savedCourse = await savedModel.find({user_id: req.user._id}).limit(6).skip(page * 6).populate({path: 'course', populate: {path: 'aa_institute'}});
+    
+
+    const savedCourse = await savedModel.find({user_id: req.user._id}).limit(6).skip(1).populate({path: 'course', populate: {path: 'aa_institute'}});
     const total = await savedModel.find({user_id: req.user._id})
     res.json({savedCourse, totalPage: total.length / 6, total: total.length});
 
